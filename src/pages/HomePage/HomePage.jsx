@@ -6,14 +6,12 @@ import Navigation from "../../components/Navigation/Navigation";
 import css from "./HomePage.module.css";
 
 const HomePage = () => {
-    
-     const [moviesList, setMoviesList] = useState([]);
+  const [moviesList, setMoviesList] = useState([]);
 
   useEffect(() => {
     const serverQuery = async () => {
       try {
         const data = await trendingMoviesFetch();
-        console.log(data.data.results);
         setMoviesList(data.data.results);
       } catch (error) {
         console.log(error);
@@ -21,15 +19,14 @@ const HomePage = () => {
     };
     serverQuery();
   }, []);
-    
-    
+
   return (
     <>
-      <nav>
+      {/* <nav>
         <Navigation />
-      </nav>
+      </nav> */}
       <h1 className={css.title}>Trending today</h1>
-          <MovieList moviesList={moviesList} />
+      <MovieList moviesList={moviesList} backPath="/"/>
     </>
   );
 };
