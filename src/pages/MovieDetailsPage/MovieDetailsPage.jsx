@@ -1,9 +1,52 @@
 import { VscArrowSmallLeft } from "react-icons/vsc";
-import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
+import detailsMoviesFetch from "../../api/movie-details";
+import { useState, useEffect } from "react";
+import genresWords from "../../utils/util";
+// import MovieGen from "../../components/MovieGen/MovieGen";
 
 const MovieDetailsPage = () => {
-  const location = useLocation();
+    const { movieId } = useParams();
+    // const [id, setId] = useState()
+
+    const [details, setDetails] = useState([]);
+     
+    
+    const location = useLocation();
+    
+    // console.log(useParams().movieId);
+    console.log(movieId);
+
+
+    useEffect(() => {
+    // const { movieId } = useParams();
+        if (!movieId) return;
+        console.log(movieId);
+        // setId(movieId)
+      async function detailsFetch (id) {
+      console.log(movieId);
+      try {
+          const data = await detailsMoviesFetch(id);
+        //   console.log(data);
+          setDetails(data.data);
+        //   const { title, vote_average, overview, genres } = details;
+       
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    detailsFetch(movieId);
+
+
+}, [movieId]);
+
+    // let { title, vote_average, overview, genres } = details;
+    // console.log(title, vote_average, overview, genres );
+    
+    console.log(details);
+    // console.log(details.title);
 
   return (
     <>
@@ -13,22 +56,30 @@ const MovieDetailsPage = () => {
       >
         <VscArrowSmallLeft />
         Go back
-      </Link>
+          </Link>
 
-      <div>
-        <img src="" alt="" />
-        <h2>Title</h2>
-        <p>Score</p>
+<div>
+        <img src={`https://image.tmdb.org/t/p/w500${details.poster_path
+}`}
+ alt="" />
+              <h2>{details.title}</h2>
+              <p>{ Math.round(details.vote_average*10)}%</p>
         <h3>Overview</h3>
-        <p>Description</p>
-        <h4>Genres</h4>
-        <p>Drama</p>
-      </div>
-      <div>
+              <p>{details.overview}</p>
+              <h4>Genres</h4>
+        <p>{ genresWords(details)}</p>
+                      </div>
+
+          {/* <MovieGen details={details} /> */}
+          
+                      <Outlet />
+      {/* <div>
         <p>Additional information</p>
         <a href="">Cast</a>
         <a href="">Reviews</a>
-      </div>
+                      </div> */}
+                    
+    
     </>
   );
 };

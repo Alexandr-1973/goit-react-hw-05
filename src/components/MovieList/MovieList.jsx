@@ -21,11 +21,11 @@ const MovieList = ({ moviesList, backPath, queryText }) => {
       {moviesList &&
         moviesList.length > 0 &&
               moviesList.map((movie) => {
-            console.log(movie);
+            // console.log(movie);
           return (
             <li key={movie.id}>
               {/* <a href="" onClick={() => handleClick(movie.id)}>{movie.title}</a> */}
-              <Link to={`/movies/:${movie.id}`} state={{ backPath, queryText }}>
+              <Link to={`/movies/${movie.id}`} state={{ backPath, queryText }}>
                 {movie.title}
               </Link>
             </li>
