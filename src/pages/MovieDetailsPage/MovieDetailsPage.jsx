@@ -4,82 +4,69 @@ import { Link, Outlet } from "react-router-dom";
 import detailsMoviesFetch from "../../api/movie-details";
 import { useState, useEffect } from "react";
 import genresWords from "../../utils/util";
-// import MovieGen from "../../components/MovieGen/MovieGen";
+import css from "./MovieDetailsPage.module.css";
 
 const MovieDetailsPage = () => {
-    const { movieId } = useParams();
-    // const [id, setId] = useState()
+  const { movieId } = useParams();
+  const [details, setDetails] = useState([]);
+  const location = useLocation();
+  const [backPath] = useState(location.state);
+  const defaultImg =
+    "https://dl-media.viber.com/10/share/2/long/vibes/icon/image/0x0/95e0/5688fdffb84ff8bed4240bcf3ec5ac81ce591d9fa9558a3a968c630eaba195e0.jpg";
 
-    const [details, setDetails] = useState([]);
-     
-    
-    const location = useLocation();
-    
-    // console.log(useParams().movieId);
-    console.log(movieId);
-
-
-    useEffect(() => {
-    // const { movieId } = useParams();
-        if (!movieId) return;
-        console.log(movieId);
-        // setId(movieId)
-      async function detailsFetch (id) {
-      console.log(movieId);
+  useEffect(() => {
+    if (!movieId) return;
+    async function detailsFetch(id) {
       try {
-          const data = await detailsMoviesFetch(id);
-        //   console.log(data);
-          setDetails(data.data);
-        //   const { title, vote_average, overview, genres } = details;
-       
+        const data = await detailsMoviesFetch(id);
+        setDetails(data.data);
       } catch (error) {
         console.log(error);
       }
     }
-
     detailsFetch(movieId);
-
-
-}, [movieId]);
-
-    // let { title, vote_average, overview, genres } = details;
-    // console.log(title, vote_average, overview, genres );
-    
-    console.log(details);
-    // console.log(details.title);
+  }, [movieId]);
 
   return (
     <>
-      <Link
-        to={location.state.backPath ? location.state.backPath : "/movies"}
-        state={location.state.queryText}
-      >
+      <Link to={backPath ? backPath : "/movies"} className={css.back}>
         <VscArrowSmallLeft />
         Go back
-          </Link>
+      </Link>
 
-<div>
-        <img src={`https://image.tmdb.org/t/p/w500${details.poster_path
-}`}
- alt="" />
-              <h2>{details.title}</h2>
-              <p>{ Math.round(details.vote_average*10)}%</p>
-        <h3>Overview</h3>
-              <p>{details.overview}</p>
-              <h4>Genres</h4>
-        <p>{ genresWords(details)}</p>
-                      </div>
+      <div className={css.details}>
+        <img
+          src={
+            details.poster_path
+              ? `https://image.tmdb.org/t/p/w500/${details.poster_path}`
+              : defaultImg
+          }
+          alt="poster"
+          className={css["details-img"]}
+        />
 
-          {/* <MovieGen details={details} /> */}
-          
-                      <Outlet />
-      {/* <div>
+        <div className={css["details-txt"]}>
+          <h2>{details.title}</h2>
+          <p>User Score: {Math.round(details.vote_average * 10)}%</p>
+          <h3>Overview</h3>
+          <p>{details.overview}</p>
+          <h4>Genres</h4>
+          <p>{genresWords(details)}</p>
+        </div>
+      </div>
+
+      <div className={css.add}>
         <p>Additional information</p>
-        <a href="">Cast</a>
-        <a href="">Reviews</a>
-                      </div> */}
-                    
-    
+        <ul className={css["add-txt"]}>
+          <li>
+            <Link to="cast">Cast</Link>
+          </li>
+          <li>
+            <Link to="reviews">Reviews</Link>
+          </li>
+        </ul>
+      </div>
+      <Outlet />
     </>
   );
 };

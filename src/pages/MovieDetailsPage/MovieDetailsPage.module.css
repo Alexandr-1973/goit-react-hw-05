@@ -1,0 +1,36 @@
+.details {
+  display: flex;
+  flex-shrink: 0;
+  padding-left: 4px;
+  margin-top: 10px;
+  gap: 20px;
+  border-bottom: 2px solid lightgrey;
+  padding-bottom: 8px;
+}
+
+.details-img {
+  width: 250px;
+}
+
+.details-txt {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-right: 20px;
+}
+
+.add {
+  display: flex;
+  flex-direction: column;
+  padding-left: 4px;
+  border-bottom: 2px solid lightgrey;
+  padding-bottom: 8px;
+  margin-top: 20px;
+}
+
+.add-txt {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-left: 20px;
+}

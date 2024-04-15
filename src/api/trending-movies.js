@@ -4,8 +4,8 @@ import BASE from "./base";
 async function trendingMoviesFetch() {
   const trendingApi = "/trending/movie/day";
   const url = `${BASE.BASE_URL}${trendingApi}`;
-    const res = await axios.get(url, BASE.OPTIONS);
-    return res;
+  const res = await axios.get(url, BASE.OPTIONS);
+  return res;
 }
 
 export default trendingMoviesFetch;

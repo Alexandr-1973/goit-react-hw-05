@@ -1,0 +1,25 @@
+p {
+  margin: 0;
+}
+
+.img {
+  width: 100px;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.card {
+  /* border: 2px solid lightgray; */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}

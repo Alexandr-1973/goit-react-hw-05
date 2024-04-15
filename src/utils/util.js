@@ -8,5 +8,5 @@ function genresWords(details) {
     return genWords;
   }
 }
- 
+
 export default genresWords;
